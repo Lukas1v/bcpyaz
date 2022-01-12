@@ -173,6 +173,8 @@ def sqlcmd(server, database, command, username=None, password=None, port=None):
     command = 'set nocount on;' + command
     sqlcmd_command = ['sqlcmd', '-S', server, '-d', database, '-b'] + auth + \
                      ['-I', '-s,', '-W', '-Q', command]
+    
+    print('debug sqlcmd_command', sqlcmd_command)
     result = subprocess.run(sqlcmd_command, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
     if result.returncode:
