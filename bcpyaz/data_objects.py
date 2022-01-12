@@ -156,7 +156,8 @@ class FlatFile(DataObject):
                     schema_name=sql_table.schema
                 ),
                 username=sql_table.username,
-                password=sql_table.password)
+                password=sql_table.password,
+                port=sql_table.port)
         
         AZURE_STORAGE_CONNECTION_STRING = os.environ.get("AZURE_STORAGE_CONNECTION_STRING", "")
         AZURE_TEMP_STORAGE_CONTAINER = os.environ.get("AZURE_TEMP_STORAGE_CONTAINER", "")
@@ -260,6 +261,7 @@ class SqlTable(DataObject):
         self.table = None
         self.username = None
         self.password = None
+        self.port = None
         input_args = set()
         if config:
             for key, value in config.items():

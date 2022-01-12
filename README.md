@@ -44,10 +44,10 @@ Following examples show you how to load (1) flat files and (2) DataFrame objects
 
 ### Flat File
 
-Following example assumes that you have a comma separated file with no qualifier in path 'tests/data1.csv'. The code below sends the the file to SQL Server.
+Following example assumes that you have a comma separated file with no qualifier in path 'tests/data1.csv'. The code below sends the the file to SQL Server. 
 
 ```python
-import bcpy
+import bcpyaz as bcpy
 
 
 sql_config = {
@@ -65,16 +65,17 @@ flat_file.to_sql(sql_table)
 
 ### DataFrame
 
-The following example creates a DataFrame with 100 rows and 4 columns populated with random data and then it sends it to SQL Server.
+The following example creates a DataFrame with 100 rows and 4 columns populated with random data and then it sends it to SQL Server. The port only needs to be specified when it is different from the default one.
 
 ```python
-import bcpy
+import bcpyaz as bcpy
 import numpy as np
 import pandas as pd
 
 
 sql_config = {
     'server': 'sql_server_hostname',
+    'port': 30101,
     'database': 'database_name',
     'username': 'test_user',
     'password': 'test_user_password1234'

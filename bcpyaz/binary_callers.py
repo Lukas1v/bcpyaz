@@ -143,7 +143,7 @@ def bcpaz(sql_table, flat_file, azure_storage_connection_string, azure_temp_stor
     blob.delete_blob()
 
 
-def sqlcmd(server, database, command, username=None, password=None):
+def sqlcmd(server, database, command, username=None, password=None, port=None):
     """Runs the input command against the database and returns the output if it
      is a table.
     Leave username and password to None if you intend to use
@@ -154,6 +154,8 @@ def sqlcmd(server, database, command, username=None, password=None):
     :type database: str
     :param command: SQL command to be executed against the server
     :type command: str
+    :param port: port to use for login
+    :type port: int
     :param username: Username to use for login
     :type username: str
     :param password: Password to use for login
@@ -166,6 +168,8 @@ def sqlcmd(server, database, command, username=None, password=None):
         auth = ['-E']
     else:
         auth = ['-U', username, '-P', password]
+    if port is not None:
+        server='{},{}'.format(server,port)
     command = 'set nocount on;' + command
     sqlcmd_command = ['sqlcmd', '-S', server, '-d', database, '-b'] + auth + \
                      ['-I', '-s,', '-W', '-Q', command]
@@ -189,3 +193,4 @@ def sqlcmd(server, database, command, username=None, password=None):
     except pd.errors.EmptyDataError:
         result = None
     return result
+
