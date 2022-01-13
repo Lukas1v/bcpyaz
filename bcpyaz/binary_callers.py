@@ -36,7 +36,7 @@ def bcp(sql_table, flat_file, batch_size):
     full_table_string = \
         f'{sql_table.schema}.{sql_table.table}'
     try:
-        bcp_command = ['bcp', full_table_string, 'IN', flat_file.path, '-f',
+        bcp_command = ['/opt/mssql-tools/bin/bcp', full_table_string, 'IN', flat_file.path, '-f',
                        flat_file.get_format_file_path(), '-S',
                        sql_table.server, '-d', sql_table.database, '-b', str(batch_size)] + auth
     except Exception as e:
