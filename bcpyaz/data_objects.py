@@ -282,6 +282,10 @@ class SqlTable(DataObject):
         :return: Kerberos authentication eligibility
         :rtype: bool
         """
+        print("debug hasattr(self, 'username')",hasattr(self, 'username'))
+        print("debug hasattr(self, 'password)",hasattr(self, 'password'))
+        print('debug self.username',self.username)
+        print('debug self.password',self.password)
         if (hasattr(self, 'username')
             and hasattr(self, 'password')
             and self.username
