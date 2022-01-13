@@ -30,8 +30,10 @@ def bcp(sql_table, flat_file, batch_size):
     :type batch_size: int
     """
     if sql_table.with_krb_auth:
+        print('debug', 'with_krb_auth = True')
         auth = ['-T']
     else:
+        print('debug', 'with_krb_auth = False')
         auth = ['-U', sql_table.username, '-P', sql_table.password]
     full_table_string = \
         f'{sql_table.schema}.{sql_table.table}'
@@ -175,8 +177,7 @@ def sqlcmd(server, database, command, username=None, password=None, port=None):
     command = 'set nocount on;' + command
     sqlcmd_command = ['sqlcmd', '-S', server, '-d', database, '-b'] + auth + \
                      ['-I', '-s,', '-W', '-Q', command]
-    
-    print('debug sqlcmd_command', sqlcmd_command)
+
     result = subprocess.run(sqlcmd_command, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
     if result.returncode:
