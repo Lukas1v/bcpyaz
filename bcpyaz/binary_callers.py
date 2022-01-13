@@ -30,10 +30,8 @@ def bcp(sql_table, flat_file, batch_size):
     :type batch_size: int
     """
     if sql_table.with_krb_auth:
-        print('debug', 'with_krb_auth = True')
         auth = ['-T']
     else:
-        print('debug', 'with_krb_auth = False')
         auth = ['-U', sql_table.username, '-P', sql_table.password]
     full_table_string = \
         f'{sql_table.schema}.{sql_table.table}'
@@ -54,7 +52,7 @@ def bcp(sql_table, flat_file, batch_size):
         raise e
     if flat_file.file_has_header_line:
         bcp_command += ['-F', '2', '-q', '-k']
-    result = subprocess.run(bcp_command, stderr=subprocess.PIPE, shell=True)
+    result = subprocess.run(bcp_command, stderr=subprocess.PIPE)
     if result.returncode:
         raise Exception(
             f'Bcp command failed. Details:\n{result}')
