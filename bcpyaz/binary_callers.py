@@ -35,10 +35,12 @@ def bcp(sql_table, flat_file, batch_size):
         auth = ['-U', sql_table.username, '-P', sql_table.password]
     full_table_string = \
         f'{sql_table.schema}.{sql_table.table}'
+    if sql_table.port is not None:
+        server=f'{sql_table.server},{sql_table.port}'
     try:
         bcp_command = ['/opt/mssql-tools/bin/bcp', full_table_string, 'IN', flat_file.path, '-f',
                        flat_file.get_format_file_path(), '-S',
-                       sql_table.server, '-d', sql_table.database, '-b', str(batch_size)] + auth
+                       server, '-d', sql_table.database, '-b', str(batch_size)] + auth
     except Exception as e:
         args_clean = list()
         for arg in e.args:
@@ -169,7 +171,7 @@ def sqlcmd(server, database, command, username=None, password=None, port=None):
     else:
         auth = ['-U', username, '-P', password]
     if port is not None:
-        server='{},{}'.format(server,port)
+        server=f'{server},{port}'
     command = 'set nocount on;' + command
     sqlcmd_command = ['sqlcmd', '-S', server, '-d', database, '-b'] + auth + \
                      ['-I', '-s,', '-W', '-Q', command]
