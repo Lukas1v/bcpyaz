@@ -275,6 +275,8 @@ class SqlTable(DataObject):
             raise ValueError(
                 f'Missing arguments in kwargs and config. '
                 f'Need {required_args}')
+        print('debug self.username', self.username)
+        print('debug self.password', self.password)
 
     @property
     def with_krb_auth(self):
