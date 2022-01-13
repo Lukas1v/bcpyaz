@@ -52,6 +52,8 @@ def bcp(sql_table, flat_file, batch_size):
         raise e
     if flat_file.file_has_header_line:
         bcp_command += ['-F', '2', '-q', '-k']
+    print('debug bcp command', bcp_command)
+    print('debug subprocess.PIPE', subprocess.PIPE)
     result = subprocess.run(bcp_command, stderr=subprocess.PIPE)
     if result.returncode:
         raise Exception(
