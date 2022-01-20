@@ -29,8 +29,7 @@ def bcp(sql_table, flat_file, batch_size):
     :param batch_size: Batch size (chunk size) to send to SQL Server
     :type batch_size: int
     """
-    print('debug sql_table.password', sql_table.password)
-    print('debug sql_table', sql_table)
+ 
     if sql_table.with_krb_auth:
         auth = ['-T']
     else:
@@ -54,7 +53,7 @@ def bcp(sql_table, flat_file, batch_size):
         raise e
     if flat_file.file_has_header_line:
         bcp_command += ['-F', '2', '-q', '-k']
-    print('debug bcp command', bcp_command)
+
 
     result = subprocess.run(bcp_command, stderr=subprocess.PIPE)
     if result.returncode:

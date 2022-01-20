@@ -275,8 +275,6 @@ class SqlTable(DataObject):
             raise ValueError(
                 f'Missing arguments in kwargs and config. '
                 f'Need {required_args}')
-        print('debug self.username', self.username)
-        print('debug self.password', self.password)
 
     @property
     def with_krb_auth(self):
@@ -284,8 +282,10 @@ class SqlTable(DataObject):
         :return: Kerberos authentication eligibility
         :rtype: bool
         """
-        if (hasattr(self, 'username')
-            and hasattr(self, 'password')):
+        if hasattr(self, 'username') and \
+                hasattr(self, 'password') and \
+                self.username and \
+                self.password:
             result = False
         else:
             result = True
